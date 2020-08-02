@@ -4,6 +4,7 @@ version: '3'
 services:
   pihole:
     container_name: pihole
+    hostname: pihole
     image: pihole/pihole:v5.1.1
     ports:
       - '53:53/tcp'
@@ -16,11 +17,17 @@ services:
       VIRTUAL_HOST: 'pi.hole'
       PROXY_LOCATION: 'pi.hole'
       ServerIP: '127.0.0.1'
+      DNS1: '172.20.0.3#5053' ## cloudflared's IP
+      DNS2: 'no' ## we don't want to use secondary dns server to make sure all our dns queries are going through cloudflared
+
       # WEBPASSWORD: 'set a secure password here or it will be random'
     # Volumes store your data between container upgrades
     volumes:
       - './etc-pihole/:/etc/pihole/'
       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    networks:
+      pihole:
+        ipv4_address: 172.20.0.2
     dns:
       - 127.0.0.1
       - 1.1.1.1
@@ -29,3 +36,24 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
+
+    # More info at https://github.com/crazy-max/docker-cloudflared/blob/master/examples/pihole/docker-compose.yml
+  cloudflared:
+    image: crazymax/cloudflared:2020.7.4
+    container_name: cloudflared
+    hostname: cloudflared
+    networks:
+      pihole:
+        ipv4_address: 172.20.0.3
+    ports:
+      - '5053:5053/udp'
+      - '49312:49312/tcp'
+    environment:
+      - 'TZ=Asia/Kolkata'
+      - 'TUNNEL_DNS_UPSTREAM=https://1.1.1.1/dns-query,https://1.0.0.1/dns-query'
+
+networks:
+  pihole:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
