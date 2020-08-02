@@ -16,7 +16,6 @@ services:
       TZ: 'Asia/Kolkata'
       VIRTUAL_HOST: 'pi.hole'
       PROXY_LOCATION: 'pi.hole'
-      ServerIP: '127.0.0.1'
       DNS1: '172.20.0.3#5053' ## cloudflared's IP
       DNS2: 'no' ## we don't want to use secondary dns server to make sure all our dns queries are going through cloudflared
 
