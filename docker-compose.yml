@@ -30,10 +30,6 @@ services:
     dns:
       - 127.0.0.1
       - 1.1.1.1
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
     restart: unless-stopped
 
     # More info at https://github.com/crazy-max/docker-cloudflared/blob/master/examples/pihole/docker-compose.yml
