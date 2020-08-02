@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
@@ -52,6 +52,7 @@ services:
 
 networks:
   pihole:
+    name: pihole_network
     ipam:
       config:
         - subnet: 172.20.0.0/24
