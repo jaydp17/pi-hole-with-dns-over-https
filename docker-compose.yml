@@ -42,7 +42,7 @@ services:
         ipv4_address: 172.20.0.3
     ports:
       - '5053:5053/udp'
-      - '49312:49312/tcp'
+      - '49312:49312/tcp' # prometheus metrics
     environment:
       - 'TZ=Asia/Kolkata'
       - 'TUNNEL_DNS_UPSTREAM=https://1.1.1.1/dns-query,https://1.0.0.1/dns-query'
