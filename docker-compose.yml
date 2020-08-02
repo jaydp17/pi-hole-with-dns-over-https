@@ -32,7 +32,7 @@ services:
       - 1.1.1.1
     restart: unless-stopped
 
-    # More info at https://github.com/crazy-max/docker-cloudflared/blob/master/examples/pihole/docker-compose.yml
+  # More info at https://github.com/crazy-max/docker-cloudflared/blob/master/examples/pihole/docker-compose.yml
   cloudflared:
     image: crazymax/cloudflared:2020.7.4
     container_name: cloudflared
@@ -46,6 +46,7 @@ services:
     environment:
       - 'TZ=Asia/Kolkata'
       - 'TUNNEL_DNS_UPSTREAM=https://1.1.1.1/dns-query,https://1.0.0.1/dns-query'
+    restart: unless-stopped
 
 networks:
   pihole:
