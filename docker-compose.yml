@@ -5,7 +5,7 @@ services:
   pihole:
     container_name: pihole
     hostname: pihole
-    image: pihole/pihole:v5.1.1
+    image: pihole/pihole:v5.1.2
     ports:
       - '53:53/tcp'
       - '53:53/udp'
@@ -36,7 +36,7 @@ services:
 
   # More info at https://github.com/crazy-max/docker-cloudflared/blob/master/examples/pihole/docker-compose.yml
   cloudflared:
-    image: crazymax/cloudflared:2020.7.4
+    image: crazymax/cloudflared:2020.9.3
     container_name: cloudflared
     hostname: cloudflared
     networks:
