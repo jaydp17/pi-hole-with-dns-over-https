@@ -7,6 +7,8 @@ The change from cloudflared to dnscrypt-proxy was made because cloudflared stops
 - https://discourse.pi-hole.net/t/automatically-restarting-cloudflared-when-internet-is-restored/21828
 - https://www.reddit.com/r/pihole/comments/myy2ae/cloudflared_not_restarting_after_an_internet/
 
+The old branch with cloudflared configuration is available & is named `cloudflared`.
+
 ## Post install configuration
 
 Pi hole has a default rate limit of 1000 reqs per 60s. And if all of our network queries are going through the router to the pi-hole, there's a chance that pi-hole might ratelimit queries from the router's IP with a REJECTED status.
