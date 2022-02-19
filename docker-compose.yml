@@ -5,7 +5,7 @@ services:
   pihole:
     container_name: pihole
     hostname: pihole
-    image: pihole/pihole:v5.1.2
+    image: pihole/pihole:2022.02.1
     ports:
       - '53:53/tcp'
       - '53:53/udp'
@@ -17,8 +17,8 @@ services:
       VIRTUAL_HOST: 'pi.hole'
       PROXY_LOCATION: 'pi.hole'
       WEBPASSWORD: ${WEBPASSWORD}
-      ServerIP: ${HOST_IP}
-      DNS1: '172.20.0.3#5053' ## cloudflared's IP
+      # ServerIP: ${HOST_IP}
+      DNS1: '172.20.0.3#5300' ## dnscrypt's IP
       DNS2: 'no' ## we don't want to use secondary dns server to make sure all our dns queries are going through cloudflared
 
       # WEBPASSWORD: 'set a secure password here or it will be random'
@@ -34,20 +34,21 @@ services:
       - 1.1.1.1
     restart: unless-stopped
 
-  # More info at https://github.com/crazy-max/docker-cloudflared/blob/master/examples/pihole/docker-compose.yml
-  cloudflared:
-    image: crazymax/cloudflared:2020.9.3
-    container_name: cloudflared
-    hostname: cloudflared
+  dnscrypt:
+    container_name: dnscrypt-proxy
+    image: klutchell/dnscrypt-proxy:2.1.1
     networks:
       pihole:
         ipv4_address: 172.20.0.3
-    ports:
-      - '5053:5053/udp'
-      - '49312:49312/tcp' # prometheus metrics
+    expose:
+      - '5300/udp'
+      - '5300/tcp'
     environment:
-      - 'TZ=Asia/Kolkata'
-      - 'TUNNEL_DNS_UPSTREAM=https://1.1.1.1/dns-query,https://1.0.0.1/dns-query'
+      TZ: 'Asia/Kolkata'
+    volumes:
+      - './dnscrypt-proxy.toml:/config/dnscrypt-proxy.toml'
+    dns:
+      - 1.1.1.1
     restart: unless-stopped
 
 networks:
