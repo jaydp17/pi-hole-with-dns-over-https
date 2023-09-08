@@ -5,7 +5,7 @@ services:
   pihole:
     container_name: pihole
     hostname: pihole
-    image: pihole/pihole:2022.05
+    image: pihole/pihole:2023.05.2
     ports:
       - '53:53/tcp'
       - '53:53/udp'
@@ -17,7 +17,6 @@ services:
       VIRTUAL_HOST: 'pi.hole'
       PROXY_LOCATION: 'pi.hole'
       WEBPASSWORD: ${WEBPASSWORD}
-      PIHOLE_UID: '0'  ## https://github.com/pi-hole/docker-pi-hole/issues/1019
       # ServerIP: ${HOST_IP}
       DNS1: '172.20.0.3#5300' ## dnscrypt's IP
       DNS2: 'no' ## we don't want to use secondary dns server to make sure all our dns queries are going through cloudflared
@@ -37,7 +36,7 @@ services:
 
   dnscrypt:
     container_name: dnscrypt-proxy
-    image: klutchell/dnscrypt-proxy:2.1.1
+    image: klutchell/dnscrypt-proxy:2.1.5
     networks:
       pihole:
         ipv4_address: 172.20.0.3
