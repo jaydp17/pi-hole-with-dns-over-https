@@ -50,7 +50,7 @@ services:
     environment:
       TZ: 'Asia/Kolkata'
     volumes:
-      - './dnscrypt-proxy.toml:/config/dnscrypt-proxy.toml'
+      - './dnscrypt-config.toml:/config/dnscrypt-proxy.toml:ro'
     dns:
       - 1.1.1.1
     restart: unless-stopped
