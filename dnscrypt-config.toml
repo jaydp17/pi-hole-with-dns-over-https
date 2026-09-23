@@ -28,7 +28,8 @@
 ##
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
-server_names = ['cloudflare-security']
+# We should keep multiple dns resolvers here. cloudflare-security was down on 23rd Sept 2026
+server_names = ['cloudflare-security', 'quad9-dnscrypt-ip4-filter-ecs-pri']
 
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
